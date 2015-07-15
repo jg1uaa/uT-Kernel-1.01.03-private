@@ -38,6 +38,9 @@ endif
 ifneq ($(filter Linux-%, $(CROSS_ARCH)), )
   PATH := $(PATH):/usr/local/bin:/bin:/usr/bin
 endif
+ifneq ($(filter OpenBSD-%, $(CROSS_ARCH)), )
+  PATH := $(PATH):/usr/local/bin:/bin:/usr/bin
+endif
 
 # ----- T-Engine Appliance AT91M55800A (ARM7TDMI) ---------------------------------
 
