@@ -22,8 +22,28 @@
 
 #include "config.h"
 
+#ifdef _APP_H83052_
+#include "sysdepend/app_h83052/utk_config_depend.h"
+#endif
+
+#ifdef _APP_H83069_
+#include "sysdepend/app_h83069/utk_config_depend.h"
+#endif
+
 #ifdef _APP_H8S2212_
 #include "sysdepend/app_h8s2212/utk_config_depend.h"
+#endif
+
+#ifdef _APP_LPC1114_
+#include "sysdepend/app_lpc1114/utk_config_depend.h"
+#endif
+
+#ifdef _APP_LPC2138_
+#include "sysdepend/app_lpc2138/utk_config_depend.h"
+#endif
+
+#ifdef _APP_LPC2388_
+#include "sysdepend/app_lpc2388/utk_config_depend.h"
 #endif
 
 #ifdef _APP_AT91_
