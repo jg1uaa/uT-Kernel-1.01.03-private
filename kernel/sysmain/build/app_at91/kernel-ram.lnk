@@ -1,0 +1,57 @@
+/*
+ *----------------------------------------------------------------------
+ *    micro T-Kernel
+ *
+ *    Copyright (C) 2006-2014 by Ken Sakamura.
+ *    This software is distributed under the T-License 2.0.
+ *----------------------------------------------------------------------
+ *
+ *    Version:   1.01.03
+ *    Released by T-Engine Forum(http://www.t-engine.org/) at 2014/09/01.
+ *
+ *----------------------------------------------------------------------
+ */
+
+/*
+ *	kernel-ram.lnk (sysmain, AT91M55800A)
+ *	linker script (RAM)
+ */
+
+OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm", "elf32-littlearm")
+OUTPUT_ARCH(arm)
+
+SECTIONS
+{
+	.init 0x00000000 : {
+		*(.vector)
+		*(.ftext)
+	}
+
+	.text 0x20000000 : {
+		*(.text)
+		*(.text.*)
+		*(.rodata)
+		*(.rodata.*)
+	} =0
+	__data_org = . ;
+	.data : {
+		__data_start = . ;
+		*(.data)
+		*(.data.*)
+		__data_end = .;
+	}
+	.bss (NOLOAD) : {
+		__bss_start = .;
+		PROVIDE (__noinit_start = .);
+		*(.noinit)
+		PROVIDE (__noinit_end = .);
+		*(.bss)
+		*(.bss.*)
+		*(COMMON)
+		__bss_end = .;
+	}
+
+	/DISCARD/ : {
+		*(.romtext.*)
+	}
+}
