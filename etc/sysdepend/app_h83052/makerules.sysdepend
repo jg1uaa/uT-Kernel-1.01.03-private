@@ -45,6 +45,9 @@ endif
 
 # GCC environment
 TARGET_ARCH =
+ifndef TOOL_PREFIX
+  TOOL_PREFIX = h8300-elf-
+endif
 
 # target type
 _CPUTYPE_FLAGS    = -mrelax -mh -malign-300 -fomit-frame-pointer -Wall -Werror
@@ -73,7 +76,7 @@ else
 endif
 
 ### C  ###
-CC := $(GNUh8300)/bin/gcc
+CC := $(GNUh8300)/bin/$(TOOL_PREFIX)gcc
 OUTPUT_OPTION = -o $@
 ifeq ($(mode), debug)
   CFLAGS += -g
@@ -101,7 +104,7 @@ LINK.c = $(CC) $(TARGET_ARCH) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	$(CC) $(TARGET_ARCH) $(CFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### C++ ###
-CXX := $(GNUh8300)/bin/gcc
+CXX := $(GNUh8300)/bin/$(TOOL_PREFIX)gcc
 CXXFLAGS = $(CFLAGS)
 
 COMPILE.cc = $(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) -c
@@ -117,7 +120,7 @@ LINK.cc = $(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	$(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### asm ###
-AS = $(GNUh8300)/bin/as
+AS = $(GNUh8300)/bin/$(TOOL_PREFIX)as
 ifeq ($(mode), debug)
   ASFLAGS += -Wa,-gdwarf-2
 else
@@ -140,7 +143,7 @@ COMPILE.s = $(AS) $(ASFLAGS.s)
 	$(CC) $(TARGET_ARCH) $(ASFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### linker ###
-LD = $(GNUh8300)/bin/ld
+LD = $(GNUh8300)/bin/$(TOOL_PREFIX)ld
 ifeq ($(mode), debug)
   LDFLAGS += $(LIBDIR:%=-L%)
 else
@@ -188,15 +191,15 @@ LOCATE.o = $(CC) $(TARGET_ARCH) $(LDFLAGS) -nostdlib $(LDFLAGS3) $(START_ADR)
 	$(RM) _$@
 
 ### library ###
-AR = $(GNUh8300)/bin/ar
+AR = $(GNUh8300)/bin/$(TOOL_PREFIX)ar
 ARFLAGS = rv
-RANLIB = $(GNUh8300)/bin/ranlib
+RANLIB = $(GNUh8300)/bin/$(TOOL_PREFIX)ranlib
 
 (%): %
 	$(AR) $(ARFLAGS) $@ $%
 
 ### create name list ###
-NM = $(GNUh8300)/bin/nm
+NM = $(GNUh8300)/bin/$(TOOL_PREFIX)nm
 NMFLAGS = -n
 
 %.map: %
@@ -236,9 +239,9 @@ DATABOX = $(DB) $(DBFLAGS)
 
 ### other ###
 ifndef CPP
-  CPP = $(GNU_BD)/bin/h8300-elf-cpp
+  CPP = $(GNUh8300)/bin/$(TOOL_PREFIX)cpp
 endif
-STRIP = $(GNUh8300)/bin/strip --strip-unneeded
+STRIP = $(GNUh8300)/bin/$(TOOL_PREFIX)strip --strip-unneeded
 
-OBJCOPY = $(GNU_BD)/bin/h8300-elf-objcopy
+OBJCOPY = $(GNUh8300)/bin/$(TOOL_PREFIX)objcopy
 OUTPUT_SREC = -O srec --srec-forceS3 --srec-len 32
