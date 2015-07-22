@@ -45,6 +45,9 @@ endif
 
 # GCC environment
 TARGET_ARCH =
+ifndef TOOL_PREFIX
+  TOOL_PREFIX = arm-none-eabi-
+endif
 
 # target type
 _CPUTYPE_FLAGS    = -march=armv6-m -Wall -Werror

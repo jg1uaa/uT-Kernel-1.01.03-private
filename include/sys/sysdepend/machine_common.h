@@ -25,6 +25,26 @@
 #  include <sys/sysdepend/app_at91/machine_depend.h>
 #endif
 
+#ifdef _APP_LPC1114_
+#  include <sys/sysdepned/app_lpc1114/machine_depend.h>
+#endif
+
+#ifdef _APP_LPC2138_
+#  include <sys/sysdepend/app_lpc2138/machine_depend.h>
+#endif
+
+#ifdef _APP_LPC2388_
+#  include <sys/sysdepend/app_lpc2388/machine_depend.h>
+#endif
+
+#ifdef _APP_H83052_
+#  include <sys/sysdepend/app_h83052/machine_depend.h>
+#endif
+
+#ifdef _APP_H83069_
+#  include <sys/sysdepend/app_h83069/machine_depend.h>
+#endif
+
 #ifdef _APP_H8S2212_
 #  include <sys/sysdepend/app_h8s2212/machine_depend.h>
 #endif
