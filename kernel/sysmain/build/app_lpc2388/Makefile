@@ -37,3 +37,12 @@ TARGET_CRT0_COMMON	= icrt0.o
 
 # include main makefile (common description)
 include ../../src/Makefile.common
+
+# create intel hex object
+ALL += $(TARGET_RAM:%.sys=%.hex) $(TARGET_ROM:%.rom=%.hex)
+
+$(TARGET_RAM:%.sys=%.hex): $(TARGET_RAM)
+	$(OBJCOPY) $(OUTPUT_IHEX) $< $@
+
+$(TARGET_ROM:%.rom=%.hex): $(TARGET_ROM)
+	$(OBJCOPY) $(OUTPUT_IHEX) $< $@
