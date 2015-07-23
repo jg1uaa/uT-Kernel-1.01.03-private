@@ -46,6 +46,9 @@ endif
 
 # GCC environment
 TARGET_ARCH =
+ifndef TOOL_PREFIX
+  TOOL_PREFIX = arm-elf-
+endif
 
 # target type
 _CPUTYPE_FLAGS    = -march=armv4t -Wall -Werror
@@ -65,7 +68,7 @@ LDFLAGS +=
 CFLAGS += -DCPU_CLOCK=58982400UL
 
 ### C  ###
-CC := $(GNUarm)/bin/gcc
+CC := $(GNUarm)/bin/$(TOOL_PREFIX)gcc
 OUTPUT_OPTION = -o $@
 ifeq ($(mode), debug)
   CFLAGS += -g
@@ -93,7 +96,7 @@ LINK.c = $(CC) $(TARGET_ARCH) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	$(CC) $(TARGET_ARCH) $(CFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### C++ ###
-CXX := $(GNUarm)/bin/gcc
+CXX := $(GNUarm)/bin/$(TOOL_PREFIX)gcc
 CXXFLAGS = $(CFLAGS)
 
 COMPILE.cc = $(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) -c
@@ -109,7 +112,7 @@ LINK.cc = $(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS)
 	$(CXX) $(TARGET_ARCH) $(CXXFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### asm ###
-AS = $(GNUarm)/bin/as
+AS = $(GNUarm)/bin/$(TOOL_PREFIX)as
 ifeq ($(mode), debug)
   ASFLAGS += -g
 else
@@ -132,7 +135,7 @@ COMPILE.s = $(AS) $(ASFLAGS.s)
 	$(CC) $(TARGET_ARCH) $(ASFLAGS) $(CPPFLAGS) -E $< $(OUTPUT_OPTION)
 
 ### linker ###
-LD = $(GNUarm)/bin/ld
+LD = $(GNUarm)/bin/$(TOOL_PREFIX)ld
 ifeq ($(mode), debug)
   LDFLAGS += $(LIBDIR:%=-L%)
 else
@@ -180,15 +183,15 @@ LOCATE.o = $(CC) $(TARGET_ARCH) $(LDFLAGS) -nostdlib $(LDFLAGS3) $(START_ADR)
 	$(RM) _$@
 
 ### library ###
-AR = $(GNUarm)/bin/ar
+AR = $(GNUarm)/bin/$(TOOL_PREFIX)ar
 ARFLAGS = rv
-RANLIB = $(GNUarm)/bin/ranlib
+RANLIB = $(GNUarm)/bin/$(TOOL_PREFIX)ranlib
 
 (%): %
 	$(AR) $(ARFLAGS) $@ $%
 
 ### create name list ###
-NM = $(GNUarm)/bin/nm
+NM = $(GNUarm)/bin/$(TOOL_PREFIX)nm
 NMFLAGS = -n
 
 %.map: %
@@ -228,10 +231,10 @@ DATABOX = $(DB) $(DBFLAGS)
 
 ### other ###
 ifndef CPP
-  CPP = $(GNU_BD)/bin/arm-elf-cpp
+  CPP = $(GNUarm)/bin/$(TOOL_PREFIX)cpp
 endif
-STRIP = $(GNUarm)/bin/strip --strip-unneeded
+STRIP = $(GNUarm)/bin/$(TOOL_PREFIX)strip --strip-unneeded
 
-OBJCOPY = $(GNU_BD)/bin/arm-elf-objcopy
+OBJCOPY = $(GNUarm)/bin/$(TOOL_PREFIX)objcopy
 OUTPUT_SREC = -O srec --srec-forceS3 --srec-len 32
 OUTPUT_IHEX = -O ihex
