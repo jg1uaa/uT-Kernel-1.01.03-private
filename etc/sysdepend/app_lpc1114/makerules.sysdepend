@@ -50,7 +50,7 @@ ifndef TOOL_PREFIX
 endif
 
 # target type
-_CPUTYPE_FLAGS    = -march=armv6-m -Wall -Werror
+_CPUTYPE_FLAGS    = -march=armv6-m -Wall -Werror -Wno-unused-but-set-variable
 _CPUTYPE_FLAGS_AS = -march=armv6-m
 _TE_SYSTEM_NAME_ = _APP_LPC1114_
 
