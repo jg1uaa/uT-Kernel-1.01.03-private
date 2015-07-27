@@ -26,7 +26,7 @@
 #endif
 
 #ifdef _APP_LPC1114_
-#  include <sys/sysdepned/app_lpc1114/machine_depend.h>
+#  include <sys/sysdepend/app_lpc1114/machine_depend.h>
 #endif
 
 #ifdef _APP_LPC2138_
